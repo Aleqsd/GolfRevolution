@@ -13,10 +13,10 @@ public class ballcontrol : MonoBehaviour {
 	public bool isJumping = false;
 	public Transform portalOutObj;
 
+
 	// Use this for initialization
 	void Start () 
 	{
-		
 	}
 	
 	// Update is called once per frame
@@ -29,6 +29,9 @@ public class ballcontrol : MonoBehaviour {
 			GetComponent<Rigidbody> ().AddRelativeForce (0, 0, zForce);
 			if (sandtrapped)
 				Instantiate (sandsprayObj, transform.position, sandsprayObj.rotation);
+
+			AudioSource audio = GetComponent<AudioSource>();
+			audio.Play();
 		}
 
 		if ((Input.GetButtonDown ("Fire2")) && (!isJumping)) 
