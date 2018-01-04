@@ -73,9 +73,9 @@ public class ballcontrol : MonoBehaviour {
 			zForce = 20;
 		}
 
-		if (zForce > 1200) 
+		if (zForce > 900) 
 		{
-			zForce = 1200;
+			zForce = 900;
 		}
 	}
 

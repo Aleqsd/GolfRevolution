@@ -633,7 +633,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: b1a19db4-a11c-4c85-87dc-645c35c02f8b
   projectName: GolfRevolution
   organizationId: aleqsd

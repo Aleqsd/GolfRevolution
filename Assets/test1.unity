@@ -342,7 +342,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 628210052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4, y: 1, z: -1.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c362fb488cbb4ff4ab9ad8e5471045c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zForce: 0
+  zForce: 100
   arrowObj: {fileID: 1028811432}
   sandtrapped: 0
   sandsprayObj: {fileID: 4922963644463718, guid: c54b30cd0d62ac04c9454ce666be91b2,
@@ -575,7 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1aaaf88515bbde4cbbd9cf6ce614cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yScale: 2
+  yScale: 1
   forceColor: 1
 --- !u!212 &1028811431
 SpriteRenderer:
@@ -628,7 +628,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1028811429}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.4, y: 0.3, z: -1.4}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 0.3, y: 1, z: 1}
   m_Children:
   - {fileID: 642539950}
@@ -727,7 +727,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62fcad50bf82b0743bc177e79c07ae40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  land: {fileID: 100002, guid: 245f4b98956a77b4cb2c93899d0a6a78, type: 3}
+  land: {fileID: 1641662364947776, guid: f5c3b547010ef28488b044b3662ae1fa, type: 2}
+  wall: {fileID: 1870509068096438, guid: 9ab8e1b2ebd3a6042bfb4e19a77a2ee6, type: 2}
 --- !u!4 &2073722497
 Transform:
   m_ObjectHideFlags: 0
