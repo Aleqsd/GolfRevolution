@@ -1,8 +1,12 @@
 # Golf Revolution
 
+![alt text](https://raw.githubusercontent.com/Aleqsd/GolfRevolution/master/Assets/Screenshots/Golf04.01.png)
+
 ## Introduction
 
 > Golf Revolution is a 3D MiniGolf game made on Unity, based on open-source assets.
+Maps are randomly generated.
+
 Assets can be found for free on Kenney.nl :
 -	https://kenney.nl/assets/minigolf-pack
 -	https://kenney.nl/assets/ui-pack
