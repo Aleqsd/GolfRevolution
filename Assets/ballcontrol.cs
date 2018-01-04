@@ -6,17 +6,24 @@ using UnityEngine;
 public class ballcontrol : MonoBehaviour {
 
     //public Transform clubObj;
-	public float zForce = 100;
+	private float zForce = 100;
 	public Transform arrowObj;
-	public bool sandtrapped = false;
+	private bool sandtrapped = false;
 	public Transform sandsprayObj;
-	public bool isJumping = false;
+	private bool isJumping = false;
 	public Transform portalOutObj;
+	private float speed;
+	private bool isMoving = false;
+	public GameObject message;
+	AudioSource audio1, audio2;
 
 
 	// Use this for initialization
 	void Start () 
 	{
+		AudioSource[] aSources = GetComponents<AudioSource>();
+		audio1 = aSources[0];
+		audio2 = aSources[1];
 	}
 	
 	// Update is called once per frame
@@ -24,29 +31,14 @@ public class ballcontrol : MonoBehaviour {
 	{
 		if (Input.GetButtonDown ("Fire1")) 
 		{
-			gameflow.currentStrokes++;
-			gameflow.totalStrokes++;
-			GetComponent<Rigidbody> ().AddRelativeForce (0, 0, zForce);
-			if (sandtrapped)
-				Instantiate (sandsprayObj, transform.position, sandsprayObj.rotation);
-
-			AudioSource audio = GetComponent<AudioSource>();
-			audio.Play();
+			Strike ();
 		}
 
-		if ((Input.GetButtonDown ("Fire2")) && (!isJumping)) 
+		if ((Input.GetKeyDown ("space")) && (!isJumping)) 
 		{
 			GetComponent<Rigidbody>().velocity = new Vector3 ((GetComponent<Rigidbody>().velocity.x), 3, (GetComponent<Rigidbody>().velocity.z));
 			isJumping = true;
 		}
-
-        if(Input.GetKeyDown("space")) 
-		{
-			GetComponent<Rigidbody> ().velocity = Vector3.zero;
-			GetComponent<Transform> ().eulerAngles = Vector3.zero;
-			arrowObj.GetComponent<Transform> ().position = transform.position;
-			isJumping = false;
-        }
 
 		if (Input.GetKey ("q")) 
 		{
@@ -73,9 +65,25 @@ public class ballcontrol : MonoBehaviour {
 			zForce = 20;
 		}
 
-		if (zForce > 900) 
+		if (zForce > 1000) 
 		{
-			zForce = 900;
+			zForce = 1000;
+		}
+
+		if (isMoving == true) 
+		{
+			speed = GetComponent<Rigidbody> ().velocity.magnitude;
+			if(speed < 0.05 && speed > 0.001f) 
+			{
+				GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
+				isMoving = false;
+				NewTurn ();
+			}
+		}
+
+		if (GetComponent<Rigidbody> ().velocity.y < -20) 
+		{
+			ReplaceBall ();
 		}
 	}
 
@@ -84,8 +92,10 @@ public class ballcontrol : MonoBehaviour {
 		if (other.name == "cup") 
 		{
 			Debug.Log ("Completed!");
+			message.GetComponent<UnityEngine.UI.Text> ().text = "Victory !";
+			message.GetComponent<UnityEngine.UI.Text> ().enabled = true;
+			audio2.Play ();
 			gameflow.currentStrokes = 0;
-			GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 0);
 			StartCoroutine (delayLoad ());
 		}
 		if (other.name == "sandtrap") 
@@ -111,7 +121,8 @@ public class ballcontrol : MonoBehaviour {
 
 	IEnumerator delayLoad()
 	{
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (5);
+		message.GetComponent<UnityEngine.UI.Text> ().enabled = false;
 		switch (SceneManager.GetActiveScene ().name) 
 		{
 		case "hole1":
@@ -139,5 +150,41 @@ public class ballcontrol : MonoBehaviour {
 			SceneManager.LoadScene ("test1");
 			break;
 		}
+	}
+
+	void Strike()
+	{
+		gameflow.currentStrokes++;
+		gameflow.totalStrokes++;
+
+		GetComponent<Rigidbody> ().AddRelativeForce (0, 0, zForce);
+		if (sandtrapped)
+			Instantiate (sandsprayObj, transform.position, sandsprayObj.rotation);
+
+		isMoving = true;
+
+		audio1.Play();
+		arrowObj.GetComponent<SpriteRenderer> ().enabled = false;
+		arrowObj.GetChild (0).GetComponent<SpriteRenderer> ().enabled = false;
+	}
+
+	void NewTurn()
+	{
+		GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+		GetComponent<Rigidbody> ().velocity = Vector3.zero;
+		GetComponent<Transform> ().eulerAngles = Vector3.zero;
+		arrowObj.GetComponent<Transform> ().position = transform.position;
+		arrowObj.GetComponent<Transform> ().eulerAngles = new Vector3(90,0,0);
+		isJumping = false;
+		arrowObj.GetComponent<SpriteRenderer> ().enabled = true;
+		arrowObj.GetChild (0).GetComponent<SpriteRenderer> ().enabled = true;
+	}
+
+	void ReplaceBall()
+	{
+		gameflow.currentStrokes += 2;
+		gameflow.totalStrokes += 2;
+		transform.position = new Vector3(0, 0.3f, 0);
+		NewTurn ();
 	}
 }

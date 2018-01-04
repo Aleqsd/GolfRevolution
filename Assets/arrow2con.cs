@@ -16,13 +16,13 @@ public class arrow2con : MonoBehaviour {
 
 		if (Input.GetKey ("z")) 
 		{
-			forceColor -= 0.01f;
+			forceColor -= 0.02f;
 			GetComponent<SpriteRenderer> ().color = new Color (1, forceColor, forceColor);
 		}
 
 		if (Input.GetKey ("s")) 
 		{
-			forceColor += 0.01f;
+			forceColor += 0.02f;
 			GetComponent<SpriteRenderer> ().color = new Color (1, forceColor, forceColor);
 		}
 	}

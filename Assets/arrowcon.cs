@@ -17,18 +17,22 @@ public class arrowcon : MonoBehaviour {
 
 		if (Input.GetKey ("z")) 
 		{
-			yScale += .05f;
-			forceColor -= 0.01f;
-			GetComponent<Transform> ().localScale = new Vector3 (.3f, yScale, 1);
-			GetComponent<SpriteRenderer> ().color = new Color (1, forceColor, forceColor);
+			if (yScale < 10) {
+				yScale += .1f;
+				forceColor -= 0.02f;
+				GetComponent<Transform> ().localScale = new Vector3 (.3f, yScale, 1);
+				GetComponent<SpriteRenderer> ().color = new Color (1, forceColor, forceColor);
+			}
 		}
 
 		if (Input.GetKey ("s")) 
 		{
-			yScale -= .05f;
-			forceColor += 0.01f;
-			GetComponent<Transform> ().localScale = new Vector3 (.3f, yScale, 1);
-			GetComponent<SpriteRenderer> ().color = new Color (1, forceColor, forceColor);
+			if (yScale > 0.2f) {
+				yScale -= .1f;
+				forceColor += 0.02f;
+				GetComponent<Transform> ().localScale = new Vector3 (.3f, yScale, 1);
+				GetComponent<SpriteRenderer> ().color = new Color (1, forceColor, forceColor);
+			}
 		}
 
 		if (Input.GetKey ("q")) {
