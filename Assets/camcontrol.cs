@@ -18,12 +18,12 @@ public class camcontrol : MonoBehaviour {
 
         if (Input.GetAxis ("Mouse ScrollWheel") > 0)
         {
-            GetComponent<Camera>().fieldOfView -= 2;
+            GetComponent<Camera>().fieldOfView -= 4;
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            GetComponent<Camera>().fieldOfView += 2;
+            GetComponent<Camera>().fieldOfView += 4;
         }
     }
 }

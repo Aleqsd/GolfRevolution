@@ -15,6 +15,7 @@ public class gameflow : MonoBehaviour
 
 	public static float totalStrokes = 0;
 	public static float currentStrokes = 0;
+	public static float par = 0;
 
 	public GameObject land;
 	public GameObject side;
@@ -22,7 +23,15 @@ public class gameflow : MonoBehaviour
 	public GameObject corner;
 	public GameObject end;
 	public GameObject hole;
-	private int size;
+	public GameObject windmill;
+	public GameObject castle;
+	public GameObject gap;
+	public GameObject tunnel;
+	public GameObject ramp;
+	public GameObject narrow;
+
+	public static int size;
+	public int sizeMax = 100;
 	//private List<GameObject> map;
 	private List<Vector3> positions; // tuples unavailable
 
@@ -48,7 +57,7 @@ public class gameflow : MonoBehaviour
 
 	void GenerateLandPositions()
 	{
-		size = Random.Range (5, 30);
+		size = Random.Range (5, sizeMax);
 		for (int i = 0; i < size; i++) {
 			//Vector3 currentPosition = map [i].transform.position;
 			Vector3 currentPosition = positions[i];
@@ -80,11 +89,19 @@ public class gameflow : MonoBehaviour
 					AddLandPosition (newPosition);
 			}
 		}
+		Debug.Log ("Lands count : " + positions.Count);
+		par = positions.Count / 2;
 	}
 
 	void GenerateLands()
 	{
 		Vector3 last = positions [positions.Count - 1];
+		bool isWindmill = false;
+		bool isCastle = false;
+		bool isGap = false;
+		bool isTunnel = false;
+		bool isRamp = false;
+		bool isNarrow = false;
 
 		foreach (Vector3 pos in positions) {
 			int walls = 0;
@@ -130,9 +147,26 @@ public class gameflow : MonoBehaviour
 			{
 				if (northWall && southWall) 
 				{
-					currentGO = Instantiate (straight);
-					currentGO.transform.position = pos;
-					currentGO.transform.Rotate (0, 90, 0);
+					if (!isGap) {
+						currentGO = Instantiate (gap);
+						currentGO.transform.position = pos;
+						currentGO.transform.Rotate (0, 90, 0);
+						isGap = true;
+					} else if (!isNarrow) {
+						currentGO = Instantiate (narrow);
+						currentGO.transform.position = pos;
+						currentGO.transform.Rotate (0, 90, 0);
+						isNarrow = true;
+					} else if (!isTunnel) {
+						currentGO = Instantiate (tunnel);
+						currentGO.transform.position = pos;
+						currentGO.transform.Rotate (0, 90, 0);
+						isTunnel = true;
+					} else {
+						currentGO = Instantiate (straight);
+						currentGO.transform.position = pos;
+						currentGO.transform.Rotate (0, 90, 0);
+					}
 				}
 				else if (northWall && westWall) 
 				{
@@ -153,8 +187,29 @@ public class gameflow : MonoBehaviour
 				}
 				else if (eastWall && westWall) 
 				{
-					currentGO = Instantiate (straight);
-					currentGO.transform.position = pos;
+					if (!isWindmill) 
+					{
+						currentGO = Instantiate (windmill);
+						currentGO.transform.position = pos;
+						isWindmill = true;
+					}
+					else if (!isCastle) 
+					{
+						currentGO = Instantiate (castle);
+						currentGO.transform.position = pos;
+						isCastle = true;
+					}
+					else if (!isRamp) 
+					{
+						currentGO = Instantiate (ramp);
+						currentGO.transform.position = pos;
+						isRamp = true;
+					}
+					else 
+					{
+						currentGO = Instantiate (straight);
+						currentGO.transform.position = pos;
+					}
 				}
 				else if (westWall && southWall) 
 				{

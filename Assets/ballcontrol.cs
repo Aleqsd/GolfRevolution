@@ -136,7 +136,7 @@ public class ballcontrol : MonoBehaviour {
 			SceneManager.LoadScene ("hole8");
 			break;
 		default :
-			SceneManager.LoadScene ("hole1");
+			SceneManager.LoadScene ("test1");
 			break;
 		}
 	}
