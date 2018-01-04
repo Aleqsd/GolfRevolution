@@ -17,17 +17,21 @@ public class gameflow : MonoBehaviour
 	public static float currentStrokes = 0;
 
 	public GameObject land;
-	public GameObject wall;
+	public GameObject side;
+	public GameObject straight;
+	public GameObject corner;
+	public GameObject end;
+	public GameObject hole;
 	private int size;
-	private List<GameObject> map;
+	//private List<GameObject> map;
 	private List<Vector3> positions; // tuples unavailable
 
 	// Use this for initialization
 	void Start ()
 	{
-		map = new List<GameObject> ();
+		//map = new List<GameObject> ();
 		positions = new List<Vector3> ();
-		CreateLand (new Vector3(0,0,0));
+		AddLandPosition (Vector3.zero);
 		GenerateMap ();
 	}
 	
@@ -37,39 +41,17 @@ public class gameflow : MonoBehaviour
 		
 	}
 
-	void CreateLand (Vector3 vector)
+	void AddLandPosition (Vector3 vector)
 	{
-		GameObject creation = Instantiate (land);
-		creation.transform.position = vector;
-		map.Add (creation);
 		positions.Add (vector);
 	}
 
-	void CreateWall (Vector3 position, Direction direction)
+	void GenerateLandPositions()
 	{
-		GameObject creation = Instantiate (wall);
-
-		if (direction.Equals (Direction.North)) {
-			creation.transform.position = new Vector3(position.x, position.y +0.1f, position.z+1.42f);
-			creation.transform.Rotate (0, 90, 0);
-		}
-		else if (direction.Equals (Direction.South)) {
-			creation.transform.position = new Vector3(position.x, position.y +0.1f, position.z-1.42f);
-			creation.transform.Rotate (0, 90, 0);
-		}
-		else if (direction.Equals (Direction.West)) {
-			creation.transform.position = new Vector3(position.x-1.42f, position.y +0.1f, position.z);
-		}
-		else if (direction.Equals (Direction.East)) {
-			creation.transform.position = new Vector3(position.x+1.42f, position.y +0.1f, position.z);
-		}
-	}
-
-	void GenerateLands()
-	{
-		size = Random.Range (5, 20);
+		size = Random.Range (5, 30);
 		for (int i = 0; i < size; i++) {
-			Vector3 currentPosition = map [i].transform.position;
+			//Vector3 currentPosition = map [i].transform.position;
+			Vector3 currentPosition = positions[i];
 			Direction currentDirection = (Direction)Random.Range (0, 3);
 
 			if (currentDirection.Equals (Direction.North)) {
@@ -77,55 +59,147 @@ public class gameflow : MonoBehaviour
 				if (positions.Contains (newPosition)) {
 					i--;
 				} else
-					CreateLand (newPosition);
+					AddLandPosition (newPosition);
 			} else if (currentDirection.Equals (Direction.South)) {
 				Vector3 newPosition = new Vector3 (currentPosition.x, currentPosition.y, currentPosition.z - 3);
 				if (positions.Contains (newPosition)) {
 					i--;
 				} else
-					CreateLand (newPosition);
+					AddLandPosition (newPosition);
 			} else if (currentDirection.Equals (Direction.West)) {
 				Vector3 newPosition = new Vector3 (currentPosition.x - 3, currentPosition.y, currentPosition.z);
 				if (positions.Contains (newPosition)) {
 					i--;
 				} else
-					CreateLand (newPosition);
+					AddLandPosition (newPosition);
 			} else if (currentDirection.Equals (Direction.East)) {
 				Vector3 newPosition = new Vector3 (currentPosition.x + 3, currentPosition.y, currentPosition.z);
 				if (positions.Contains (newPosition)) {
 					i--;
 				} else
-					CreateLand (newPosition);
+					AddLandPosition (newPosition);
 			}
 		}
 	}
 
-	void GenerateWalls()
+	void GenerateLands()
 	{
-		foreach (Vector3 position in positions) {
-			Vector3 checkNorth = new Vector3 (position.x, position.y, position.z + 3);
-			Vector3 checkSouth = new Vector3 (position.x, position.y, position.z - 3);
-			Vector3 checkWest = new Vector3 (position.x-3, position.y, position.z);
-			Vector3 checkEast = new Vector3 (position.x+3, position.y, position.z);
+		Vector3 last = positions [positions.Count - 1];
+
+		foreach (Vector3 pos in positions) {
+			int walls = 0;
+			bool northWall = false;
+			bool southWall = false;
+			bool westWall = false;
+			bool eastWall = false;
+			Vector3 checkNorth = new Vector3 (pos.x, pos.y, pos.z + 3);
+			Vector3 checkSouth = new Vector3 (pos.x, pos.y, pos.z - 3);
+			Vector3 checkWest = new Vector3 (pos.x-3, pos.y, pos.z);
+			Vector3 checkEast = new Vector3 (pos.x+3, pos.y, pos.z);
+			GameObject currentGO = new GameObject ();
 
 			if (!positions.Contains (checkNorth)) {
-				CreateWall (position,Direction.North);
+				walls++;
+				northWall = true;
 			}
 			if (!positions.Contains (checkSouth)) {
-				CreateWall (position,Direction.South);
+				walls++;
+				southWall = true;
 			}
 			if (!positions.Contains (checkWest)) {
-				CreateWall (position,Direction.West);
+				walls++;
+				westWall = true;
 			}
 			if (!positions.Contains (checkEast)) {
-				CreateWall (position,Direction.East);
+				walls++;
+				eastWall = true;
+			}
+
+			if (walls == 1) 
+			{
+				currentGO = Instantiate (side);
+				currentGO.transform.position = pos;
+				if (northWall)
+					currentGO.transform.Rotate (0, 270, 0);
+				else if (southWall)
+					currentGO.transform.Rotate (0, 90, 0);
+				else if (westWall)
+					currentGO.transform.Rotate (0, 180, 0);
+			}
+			else if (walls == 2) 
+			{
+				if (northWall && southWall) 
+				{
+					currentGO = Instantiate (straight);
+					currentGO.transform.position = pos;
+					currentGO.transform.Rotate (0, 90, 0);
+				}
+				else if (northWall && westWall) 
+				{
+					currentGO = Instantiate (corner);
+					currentGO.transform.position = pos;
+					currentGO.transform.Rotate (0, 180, 0);
+				}
+				else if (northWall && eastWall) 
+				{
+					currentGO = Instantiate (corner);
+					currentGO.transform.position = pos;
+					currentGO.transform.Rotate (0, 270, 0);
+				}
+				else if (eastWall && southWall) 
+				{
+					currentGO = Instantiate (corner);
+					currentGO.transform.position = pos;
+				}
+				else if (eastWall && westWall) 
+				{
+					currentGO = Instantiate (straight);
+					currentGO.transform.position = pos;
+				}
+				else if (westWall && southWall) 
+				{
+					currentGO = Instantiate (corner);
+					currentGO.transform.position = pos;
+					currentGO.transform.Rotate (0, 90, 0);
+				}
+			}
+			else if (walls == 3) 
+			{
+				if (pos.Equals (last)) 
+					currentGO = Instantiate (hole);
+				else 
+					currentGO = Instantiate (end);
+				if (!northWall) 
+				{
+					currentGO.transform.position = pos;
+				} 
+				else if (!westWall) 
+				{
+					currentGO.transform.position = pos;
+					currentGO.transform.Rotate (0, 270, 0);
+				}
+				else if (!eastWall) 
+				{
+					currentGO.transform.position = pos;
+					currentGO.transform.Rotate (0, 90, 0);
+				} 
+				else if (!southWall) 
+				{
+					currentGO.transform.position = pos;
+					currentGO.transform.Rotate (0, 180, 0);
+				} 
+			}
+			else 
+			{
+				currentGO = Instantiate (land);
+				currentGO.transform.position = pos;
 			}
 		}
 	}
 
 	void GenerateMap ()
 	{
+		GenerateLandPositions ();
 		GenerateLands ();
-		GenerateWalls ();
 	}
 }
