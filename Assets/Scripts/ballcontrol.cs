@@ -8,10 +8,10 @@ public class ballcontrol : MonoBehaviour {
     //public Transform clubObj;
 	private float zForce = 100;
 	public Transform arrowObj;
-	private bool sandtrapped = false;
-	public Transform sandsprayObj;
+//	private bool sandtrapped = false;
+//	public Transform sandsprayObj;
 	private bool isJumping = false;
-	public Transform portalOutObj;
+//	public Transform portalOutObj;
 	private float speed;
 	private bool isMoving = false;
 	public GameObject message;
@@ -98,26 +98,26 @@ public class ballcontrol : MonoBehaviour {
 			gameflow.currentStrokes = 0;
 			StartCoroutine (delayLoad ());
 		}
-		if (other.name == "sandtrap") 
-		{
-			sandtrapped = true;
-			GetComponent<Rigidbody> ().drag = 4;
-		}
-		if (other.name == "portalIn") 
-		{
-			transform.position = portalOutObj.GetComponent<Transform> ().position;
-			GetComponent<Rigidbody> ().velocity = new Vector3 (-(GetComponent<Rigidbody> ().velocity.z), 0, 0);
-		}
+//		if (other.name == "sandtrap") 
+//		{
+//			sandtrapped = true;
+//			GetComponent<Rigidbody> ().drag = 4;
+//		}
+//		if (other.name == "portalIn") 
+//		{
+//			transform.position = portalOutObj.GetComponent<Transform> ().position;
+//			GetComponent<Rigidbody> ().velocity = new Vector3 (-(GetComponent<Rigidbody> ().velocity.z), 0, 0);
+//		}
 	}
 
-	void OnTriggerExit(Collider another) 
-	{
-		if (another.name == "sandtrap") 
-		{
-			sandtrapped = false;
-			GetComponent<Rigidbody> ().drag = 0;
-		}
-	}
+//	void OnTriggerExit(Collider another) 
+//	{
+//		if (another.name == "sandtrap") 
+//		{
+//			sandtrapped = false;
+//			GetComponent<Rigidbody> ().drag = 0;
+//		}
+//	}
 
 	IEnumerator delayLoad()
 	{
@@ -128,24 +128,24 @@ public class ballcontrol : MonoBehaviour {
 		case "hole1":
 			SceneManager.LoadScene ("hole2");
 			break;
-		case "hole2":
-			SceneManager.LoadScene ("hole3");
-			break;
-		case "hole3":
-			SceneManager.LoadScene ("hole4");
-			break;
-		case "hole4":
-			SceneManager.LoadScene ("hole5");
-			break;
-		case "hole5":
-			SceneManager.LoadScene ("hole6");
-			break;
-		case "hole6":
-			SceneManager.LoadScene ("hole7");
-			break;
-		case "hole7":
-			SceneManager.LoadScene ("hole8");
-			break;
+//		case "hole2":
+//			SceneManager.LoadScene ("hole3");
+//			break;
+//		case "hole3":
+//			SceneManager.LoadScene ("hole4");
+//			break;
+//		case "hole4":
+//			SceneManager.LoadScene ("hole5");
+//			break;
+//		case "hole5":
+//			SceneManager.LoadScene ("hole6");
+//			break;
+//		case "hole6":
+//			SceneManager.LoadScene ("hole7");
+//			break;
+//		case "hole7":
+//			SceneManager.LoadScene ("hole8");
+//			break;
 		default :
 			SceneManager.LoadScene ("test1");
 			break;
@@ -158,8 +158,8 @@ public class ballcontrol : MonoBehaviour {
 		gameflow.totalStrokes++;
 
 		GetComponent<Rigidbody> ().AddRelativeForce (0, 0, zForce);
-		if (sandtrapped)
-			Instantiate (sandsprayObj, transform.position, sandsprayObj.rotation);
+//		if (sandtrapped)
+//			Instantiate (sandsprayObj, transform.position, sandsprayObj.rotation);
 
 		isMoving = true;
 
