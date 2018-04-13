@@ -18,6 +18,8 @@ public class ballcontrol : MonoBehaviour
     public GameObject message;
     AudioSource audio1, audio2;
     private bool isStrikable = true;
+    public GameObject resurrect;
+    public GameObject fireworks;
 
 
     // Use this for initialization
@@ -100,6 +102,7 @@ public class ballcontrol : MonoBehaviour
             message.GetComponent<UnityEngine.UI.Text>().text = "Victory !";
             message.GetComponent<UnityEngine.UI.Text>().enabled = true;
             audio2.Play();
+            Destroy(Instantiate(fireworks, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(-90, 0, 0)), 3);
             gameflow.currentStrokes = 0;
             StartCoroutine(delayLoad());
         }
@@ -162,7 +165,7 @@ public class ballcontrol : MonoBehaviour
         gameflow.currentStrokes++;
         gameflow.totalStrokes++;
 
-        GetComponent<Rigidbody>().AddRelativeForce(0, 0, zForce);
+        GetComponent<Rigidbody>().AddRelativeForce(0, 0.01f, zForce);
         //		if (sandtrapped)
         //			Instantiate (sandsprayObj, transform.position, sandsprayObj.rotation);
 
@@ -191,6 +194,7 @@ public class ballcontrol : MonoBehaviour
         gameflow.currentStrokes += 2;
         gameflow.totalStrokes += 2;
         transform.position = new Vector3(0, 0.3f, 0);
+        Destroy(Instantiate(resurrect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(-90, 0, 0)), 3);
         NewTurn();
     }
 }

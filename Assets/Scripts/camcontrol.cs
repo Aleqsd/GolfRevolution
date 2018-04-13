@@ -6,7 +6,7 @@ public class camcontrol : MonoBehaviour
 {
     public float lookSpeedH = 2f;
     public float lookSpeedV = 2f;
-    public float zoomSpeed = 2f;
+    public float zoomSpeed = 50f;
     public float dragSpeed = 6f;
 
     private float yaw = 0f;

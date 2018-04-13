@@ -35,6 +35,8 @@ public class gameflow : MonoBehaviour
     //private List<GameObject> map;
     private List<Vector3> positions; // tuples unavailable
 
+    // TODO : Hole can be 2 walls or 1 walls?
+
     // Use this for initialization
     void Start()
     {

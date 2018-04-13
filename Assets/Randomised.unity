@@ -310,7 +310,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &255310446
 MonoBehaviour:
@@ -762,6 +762,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowObj: {fileID: 1028811432}
   message: {fileID: 1992056064}
+  resurrect: {fileID: 100000, guid: ada5d62ffe762ce4fbccc70dcdbc9022, type: 2}
+  fireworks: {fileID: 1247311384876784, guid: 4adffb0018aeda44e9263f901167af1f, type: 2}
 --- !u!82 &628210059
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1430,7 +1432,7 @@ MonoBehaviour:
   tunnel: {fileID: 1838671171085646, guid: 663bb97be3a393d4087e5ab26febe609, type: 2}
   ramp: {fileID: 1840086285728002, guid: 8574f5e6cecddc141a34865535f77c6a, type: 2}
   narrow: {fileID: 1827315104524090, guid: c571c68ca897c6240bf07dd742ffb00d, type: 2}
-  sizeMax: 10
+  sizeMax: 5
 --- !u!4 &2073722497
 Transform:
   m_ObjectHideFlags: 0
@@ -1442,7 +1444,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2116645361
 GameObject:
