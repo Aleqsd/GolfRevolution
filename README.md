@@ -8,6 +8,7 @@
 > Golf Revolution is a 3D MiniGolf game made on Unity, based on open-source assets.
 Maps are randomly generated.
 
+
 ## Features
 
 ### Map randomly generated !
@@ -23,19 +24,24 @@ Maps are created with specials fields like holes, gaps, windmill, castles ...
 ### Sounds, particles !
 Special easter eggs are done with sounds and particles, reminding you some games, will you be able to find the references ?
 
+
 ## Know Issues
 
-Common :
+### Common :
 -
 
-Rare : 
+### Rare :
+
 Map generations without holes : Think about cases with 2 walls floor with hole.
+
 Ball going through walls : Continuous collision makes the ball hit the prefabs, redesign the prefabs?
+
 Arrow popping in the wrong position : Find how to reproduce
 
-## Future feature
+## Future features
 
 Adaptative Camera : Add a camera that not only follow the ball, but find the right direction hinting you the direction of the hole.
+
 Optimize difficulty : Balance the difficulty by managing the max size of the map and the number of special fields inside.
 
 ## Resources
